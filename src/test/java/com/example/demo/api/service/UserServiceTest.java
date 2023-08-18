@@ -104,7 +104,7 @@ public class UserServiceTest {
 		@Test
 		void deleteUser()
 		{
-			user.setId(1L);
+			user.setId(1L); 
 			userService.deleteData(1L);
 			verify(userRepository, times(1)).deleteById(1L);
 			assertNotNull(user);

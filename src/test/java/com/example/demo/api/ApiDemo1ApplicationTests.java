@@ -2,15 +2,11 @@ package com.example.demo.api;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.web.server.LocalServerPort;
-import org.springframework.web.client.RestTemplate;
 
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@SpringBootTest
 class ApiDemo1ApplicationTests {
-	@LocalServerPort
-	private int port;
-	private String baseUrl="http://localhost";
 
-	private RestTemplate restTemplate;
-
+	@Test
+	void contextLoads() {
+	}
 }
