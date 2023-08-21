@@ -47,7 +47,7 @@ public class UserRepositoryTest {
 
 	@Test
 	// providing custom names to test cases
-	@DisplayName("it should the data to databse")
+	@DisplayName("it should save the data to databse")
 	void save() {
 		User newUser = userRepository.save(user);
 		assertThat(newUser);
@@ -59,12 +59,11 @@ public class UserRepositoryTest {
 	void findAll() {
 		List<User> list = userRepository.findAll();
 		assertNotNull(list);
-		// assertThat(list).isNotNull();
 		assertEquals(2, list.size());
 	}
 
 	@Test
-	@DisplayName("Returnign users with sri name")
+	@DisplayName("Returning users with sri name")
 	void getUserByName() {
 		List<User> list = userRepository.findByName("Sri");
 		assertNotNull(list);
@@ -72,7 +71,7 @@ public class UserRepositoryTest {
 	}
 
 	@Test
-	@DisplayName("It should retunr the id")
+	@DisplayName("It should return the id")
 	void getUserById() {
 		User existingUser = userRepository.findById(user.getId()).get();
 		assertNotNull(existingUser);
@@ -99,4 +98,5 @@ public class UserRepositoryTest {
 		assertEquals(1, list.size());
 		assertThat(existingUser).isEmpty();
 	}
+
 }
