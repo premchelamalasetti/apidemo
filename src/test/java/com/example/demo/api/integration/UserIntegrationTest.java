@@ -46,20 +46,20 @@ public class UserIntegrationTest {
 	@BeforeEach
 	public void beforeSetUp() {
 		baseUrl = baseUrl + ":" + port + "/api";
-		User user = new User();
+		user = new User();
 		user.setName("Prem");
 		user.setJob("Trainne");
 		user.setMail("prem.pe@gmail.com");
 		user.setCreatedDate(new Date(System.currentTimeMillis()));
 		user.setCreatedTime(new Time(System.currentTimeMillis()));
-		
-		User user2 = new User();
+
+		user2 = new User();
 		user2.setName("Sri");
 		user2.setJob("Trainne");
 		user2.setMail("sri.pe@gmail.com");
 		user2.setCreatedDate(new Date(System.currentTimeMillis()));
 		user2.setCreatedTime(new Time(System.currentTimeMillis()));
-		
+
 		userRepository.save(user);
 		userRepository.save(user2);
 	}
@@ -79,7 +79,7 @@ public class UserIntegrationTest {
 		user.setCreatedDate(new Date(System.currentTimeMillis()));
 		user.setCreatedTime(new Time(System.currentTimeMillis()));
 		userRepository.save(user);
-		
+
 		User user2 = new User();
 		user2.setId(2L);
 		user2.setName("Sri");
@@ -95,20 +95,31 @@ public class UserIntegrationTest {
 
 	@Test
 	void shouldReturnUsersTest() {
-
 		List<User> list = restTemplate.getForObject(baseUrl + "/users", List.class);
-
 		assertThat(list.size()).isEqualTo(2);
 	}
 
 	@Test
 	void shouldFetchOneUser() {
-
 		User existingUser = restTemplate.getForObject(baseUrl + "/findbyid/" + user.getId(), User.class);
-		System.out.println("-----"+existingUser+"-----");
+		System.out.println("-----" + existingUser + "-----");
 		assertNotNull(existingUser);
 		assertEquals("Prem", existingUser.getName());
 	}
 
-	
+	@Test
+	void shouldDeleteUserById() {
+		restTemplate.delete(baseUrl + "/deleteById/" + user.getId(), User.class);
+		int count = userRepository.findAll().size();
+		assertEquals(1, count);
+	}
+
+	@Test
+	void shouldUpdateUserById() {
+		user.setName("Kumar");
+		restTemplate.put(baseUrl + "/updateById/{id}", user, user.getId());
+		User existingUser = restTemplate.getForObject(baseUrl + "/findbyid/" + user.getId(), User.class);
+		assertNotNull(user);
+		assertThat("Kumar").isEqualTo(user.getName());
+	}
 }
